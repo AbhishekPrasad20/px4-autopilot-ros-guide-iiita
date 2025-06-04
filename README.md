@@ -51,28 +51,59 @@ pip install --user -U empy==3.3.4 pyros-genmsg setuptools
 
 ---
 
-## 📌 Micro XRCE-DDS Agent & Client Setup  
-PX4 uses **uXRCE-DDS** for communication via DDS.
+# 📌 **Micro XRCE-DDS Agent & Client Setup**
+PX4 uses **uXRCE-DDS** for communication via DDS. This setup ensures proper interaction between PX4 and ROS 2.
 
-### **Install Micro XRCE-DDS Agent**
+---
+
+## **🔹 Prerequisites**
+| Prerequisite | Required for | Installation Command |
+|-------------|-------------|----------------------|
+| **CMake ≥ 3.16** | Build system | `sudo apt install cmake` |
+| **C++11 Compiler** | Build system | `sudo apt install build-essential` |
+| **make/ninja** | Build system | `sudo apt install make ninja-build` |
+| **Git** | Superbuild | `sudo apt install git` |
+| **Fast-CDR** | Dependency | Superbuild or system install |
+| **Fast DDS (fastrtps)** | Dependency | Superbuild or system install |
+| **spdlog** | Logger profile | Superbuild or system install |
+| **microxrcedds_client** | P2P profile | Superbuild or system install |
+| **microcdr** | P2P profile | Superbuild or system install |
+| **GTest/GMock** | Unit Testing | `sudo apt install libgtest-dev` |
+| **Python** | Scripts/Tests | `sudo apt install python3` |
+| **NSIS** | Windows installer | Download from [NSIS](https://nsis.sourceforge.io/) |
+
+---
+
+## **🔹 Install Micro XRCE-DDS Agent**
+Before proceeding, ensure **Fast-CDR** is installed.
+
+### **Step 1: Clone Repository**
 ```bash
 git clone -b v2.4.2 https://github.com/eProsima/Micro-XRCE-DDS-Agent.git
 cd Micro-XRCE-DDS-Agent
 mkdir build && cd build
-//replace cmakelists.txt with the one in repo also make sure to install fastcdr before
+```
+
+### **Step 2: Replace CMakeLists.txt**
+Ensure you replace the default `CMakeLists.txt` with the one available in this repo before building.
+
+### **Step 3: Build & Install**
+```bash
 cmake ..
-make
+make -j$(nproc)
 sudo make install
 sudo ldconfig /usr/local/lib/
 ```
+📌 **Note:** Ensure `fastcdr` is installed before building.
 
-### **Start the Agent**
-Run the agent to connect to PX4:
+---
+
+## **🔹 Start the Micro XRCE-DDS Agent**
+Once installed, run the agent to connect to PX4:
 ```bash
 MicroXRCEAgent udp4 -p 8888
 ```
-📌 **Note:** Keep this terminal open while running the PX4 client.
-
+📌 **Important:** Keep this terminal open while running the PX4 client.
 ---
 
 ## 📌 Start PX4 Gazebo Simulation  
