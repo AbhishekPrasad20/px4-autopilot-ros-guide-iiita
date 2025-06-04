@@ -1,4 +1,4 @@
-Got it! Here’s a **GitHub README** version of your PX4 + ROS 2 guide, formatted for clarity and readability:
+
 
 ```markdown
 # PX4 Autopilot + ROS 2 Guide (IIITA) 🚀  
